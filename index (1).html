@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y - Built for Direction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Hero Image Section */
+        .hero-image-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #000000;
+        }
+
+        .hero-image-section img {
+            max-width: 90%;
+            max-height: 70vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            cursor: pointer;
+            color: #D4BC79;
+        }
+
+        .scroll-indicator .text {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .scroll-indicator .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid #D4BC79;
+            border-bottom: 2px solid #D4BC79;
+            transform: rotate(45deg);
+            margin: 0 auto;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) rotate(45deg);
+            }
+            40% {
+                transform: translateY(-10px) rotate(45deg);
+            }
+            60% {
+                transform: translateY(-5px) rotate(45deg);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(212, 188, 121, 0.2);
+            z-index: 100;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 600;
+            color: #D4BC79;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #999999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #D4BC79;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: #999999;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Rest of your existing styles... */
+        h2 {
+            font-size: 36px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .col h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #D4BC79;
+        }
+
+        .col p {
+            color: #999999;
+            line-height: 1.8;
+        }
+
+        .steps {
+            display: grid;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            display: flex;
+            gap: 24px;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #D4BC79;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .step-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: #999999;
+        }
+
+        .pricing {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .price-card {
+            border: 1px solid rgba(212, 188, 121, 0.2);
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .price-card.featured {
+            border-color: #D4BC79;
+            background: rgba(212, 188, 121, 0.05);
+        }
+
+        .price-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #D4BC79;
+            margin-bottom: 24px;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .price-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999999;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: #D4BC79;
+            color: #000;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .faq {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-item h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .faq-item p {
+            color: #999999;
+            line-height: 1.8;
+        }
+
+        .signup-form {
+            max-width: 600px;
+            margin: 60px auto 0;
+            padding: 40px;
+            border: 1px solid rgba(212, 188, 121, 0.2);
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #999999;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #D4BC79;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            background: #D4BC79;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #ffffff;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999999;
+        }
+
+        .footer a {
+            color: #D4BC79;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .two-col,
+            .pricing {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen Hero Image -->
+    <section class="hero-image-section">
+        <img src="You_are_what_you_do.png" alt="You are what you do">
+        <div class="scroll-indicator" onclick="document.querySelector('.nav').scrollIntoView({behavior: 'smooth'})">
+            <div class="text">Scroll</div>
+            <div class="arrow"></div>
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">Y •</div>
+            <ul class="nav-links">
+                <li><a href="#why">Why</a></li>
+                <li><a href="#how">How it works</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#signup">Request access</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <h1>Not built for attention.<br>Built for direction.</h1>
+            <p class="subtitle">Y observes your behavior for weeks before showing you anything. Because real patterns take time to emerge.</p>
+            <a href="#signup" class="cta-button">Request Pilot Access</a>
+        </section>
+
+        <!-- Social Proof -->
+        <section class="section">
+            <p style="text-align: center; color: #999999; font-size: 14px;">Used by behavioral researchers, recovery coaches, and people tired of being tracked</p>
+        </section>
+
+        <!-- Problem/Solution -->
+        <section id="why" class="section">
+            <div class="two-col">
+                <div class="col">
+                    <h3>Every other app wants your attention</h3>
+                    <p>Streaks. Badges. Daily goals. They gamify your behavior to keep you coming back. The app wins when you're hooked.</p>
+                </div>
+                <div class="col">
+                    <h3>Y wants your truth</h3>
+                    <p>We observe silently for weeks. No scores. No judgment. Just patterns emerging naturally from what you actually do.</p>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="col">
+                    <h3>They show you what you want to see</h3>
+                    <p>Filtered highlights. Curated moments. Performance metrics that feel good but mean nothing.</p>
+                </div>
+                <div class="col">
+                    <h3>We show you what's actually happening</h3>
+                    <p>Your trajectory. Not your score. Where your behavior is actually heading, not where you wish it was.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works -->
+        <section id="how" class="section">
+            <h2>How it works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Connect your wearable</h3>
+                        <p>Apple Watch, Fitbit, Garmin, Oura, or Whoop. Y reads what you're already tracking.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Live normally for 14-30 days</h3>
+                        <p>Y watches silently. No notifications. No check-ins. No performance theater.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Y builds your baseline</h3>
+                        <p>Sleep, movement, heart rate, location. The algorithm learns what "normal" actually means for you.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Your Y-frame emerges</h3>
+                        <p>Narrowing. Widening. Stable. Oscillating. Your behavioral trajectory, not a score.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>You see what's really happening</h3>
+                        <p>Not what you did yesterday. Where your behavior has been heading for weeks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Differentiation -->
+        <section class="section">
+            <h2>The incentive fix</h2>
+            <div class="two-col">
+                <div class="col">
+                    <h3>No ads. Ever.</h3>
+                    <p>We're not selling your attention to advertisers. Your behavioral data stays with you.</p>
+                </div>
+                <div class="col">
+                    <h3>No influencers. No feed.</h3>
+                    <p>Y isn't social. There's nothing to share, nothing to compare, no one to perform for.</p>
+                </div>
+            </div>
+            <div class="two-col">
+                <div class="col">
+                    <h3>No gamification</h3>
+                    <p>No streaks. No badges. No points. Just observation.</p>
+                </div>
+                <div class="col">
+                    <h3>You pay us. We serve you.</h3>
+                    <p>Simple transaction. You're the customer, not the product.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy -->
+        <section id="privacy" class="section">
+            <h2>Privacy by default</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto; color: #999999;">Your behavioral data never leaves your device without explicit consent. Y processes everything locally. We only see anonymized pattern data. You can export everything. You can delete everything. No exceptions.</p>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section">
+            <h2>Pricing</h2>
+            <div class="pricing">
+                <div class="price-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul>
+                        <li>14-day observation period</li>
+                        <li>Your Y-frame trajectory</li>
+                        <li>Basic pattern view</li>
+                        <li>One wearable connection</li>
+                    </ul>
+                    <a href="#signup" class="cta-button">Start Observing</a>
+                </div>
+                <div class="price-card featured">
+                    <h3>Y+ Premium</h3>
+                    <div class="price">$9.99<span style="font-size: 16px; color: #999">/mo</span></div>
+                    <ul>
+                        <li>Everything in Free</li>
+                        <li>30-day observation periods</li>
+                        <li>Advanced correlations (sleep, exercise, location)</li>
+                        <li>Predictions & trend analysis</li>
+                        <li>Multiple wearables</li>
+                        <li>Kindle & Spotify integration</li>
+                    </ul>
+                    <a href="#signup" class="cta-button">Request Y+ Access</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2>Questions</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <h3>Why does Y take so long to show me anything?</h3>
+                    <p>Because behavior is evidence over time, not snapshots. Y needs weeks to establish your baseline and detect real patterns, not noise.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What's a Y-frame?</h3>
+                    <p>Your behavioral trajectory. Narrowing means your behavior range is shrinking. Widening means it's expanding. Stable means you're consistent. Oscillating means you're cycling between states.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is this for people in recovery?</h3>
+                    <p>Y was designed for recovery contexts, but it's for anyone who wants to understand their behavior without performance pressure.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I delete my data?</h3>
+                    <p>Yes. Instantly. All of it. No questions asked.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What wearables does Y support?</h3>
+                    <p>Apple Watch, Fitbit, Garmin, Oura, Whoop. More coming based on pilot feedback.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup -->
+        <section id="signup" class="section">
+            <h2>Request pilot access</h2>
+            <form class="signup-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>I am a...</label>
+                    <select required>
+                        <option value="">Select one</option>
+                        <option>Person in recovery</option>
+                        <option>Recovery coach/counselor</option>
+                        <option>Researcher</option>
+                        <option>Just curious</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Wearable device</label>
+                    <select required>
+                        <option value="">Select one</option>
+                        <option>Apple Watch</option>
+                        <option>Fitbit</option>
+                        <option>Garmin</option>
+                        <option>Oura</option>
+                        <option>Whoop</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>What do you want to observe? (optional)</label>
+                    <input type="text" placeholder="e.g., sleep patterns, activity consistency">
+                </div>
+                <button type="submit" class="submit-button">Request Access</button>
+            </form>
+        </section>
+
+        <!-- Closing -->
+        <section class="section" style="text-align: center;">
+            <h2 style="margin-bottom: 24px;">This is your fork in the road</h2>
+            <p style="color: #999999; max-width: 600px; margin: 0 auto 40px;">Keep performing for apps. Or start observing yourself.</p>
+            <a href="#signup" class="cta-button">Request Pilot Access</a>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Questions? <a href="mailto:y@yourey.com">y@yourey.com</a></p>
+        <p style="margin-top: 16px; font-size: 12px;">No judgment. Just patterns.</p>
+    </footer>
+
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert("You're in. We'll email access as cohorts open.");
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
